@@ -1,11 +1,11 @@
 import numpy as np
 import math
 
-def sobelX(image, i, j):
+def sobelY(image, i, j):
     return image[i + 2, j] + 2 * image[i + 2, j + 1] + image[i + 2, j + 2] - image[i, j] - 2 * image[i, j + 1] - image[i, j + 2]
 
 
-def sobelY(image, i, j):
+def sobelX(image, i, j):
     return image[i, j + 2] + 2 * image[i + 1, j + 2] + image[i + 2, j + 2] - image[i, j] - 2 * image[i + 1, j] - image[i + 2, j]
 
 

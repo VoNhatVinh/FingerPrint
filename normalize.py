@@ -1,4 +1,5 @@
 import math
+import numpy as np
 
 def getMean(img):
     '''Hàm tính trung vị ảnh đã gray scale'''
