@@ -23,4 +23,5 @@ def orientation_estimation(img, wS=4):
                     gXY += gX*gY
                     gYY += gY*gY
             direct[i, j] = math.pi/2 - 0.5*math.atan2(2*gXY,gXX-gYY)
+            
     return direct

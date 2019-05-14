@@ -3,13 +3,13 @@ import numpy as np
 
 def create_list_neighbor(img, x, y):
     res = []
-    res.append(img[x, y-1])
-    res.append(img[x+1, y-1])
-    res.append(img[x+1, y])
+    res.append(img[x - 1, y])
+    res.append(img[x - 1, y + 1])
+    res.append(img[x, y + 1])
     res.append(img[x+1, y+1])
-    res.append(img[x, y+1])
-    res.append(img[x-1, y+1])
-    res.append(img[x-1, y])
+    res.append(img[x + 1, y])
+    res.append(img[x + 1, y - 1])
+    res.append(img[x, y - 1])
     res.append(img[x-1, y-1])
     return res
 

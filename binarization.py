@@ -1,5 +1,5 @@
 import numpy as np
-
+from copy import deepcopy
 
 def cnt_not_below(img, value):
     w, h = img.shape
@@ -75,12 +75,13 @@ def get_threshold(img):
     return threshold
 
 def binary_image(img, threshold = -1):
+    res = deepcopy(img)
     if threshold < 0:
-        threshold = get_threshold(img)
+        threshold = get_threshold(res)
     w, h = img.shape
     for i in range(w):
         for j in range(h):
-            if img[i, j] > threshold:
-                img[i, j] = 255
-            else: img[i, j] = 0
-    return img
+            if res[i, j] > threshold:
+                res[i, j] = 255
+            else: res[i, j] = 0
+    return res

@@ -1,5 +1,6 @@
 import math
 import numpy as np
+from copy import deepcopy
 
 def getMean(img):
     '''Hàm tính trung vị ảnh đã gray scale'''

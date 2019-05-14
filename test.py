@@ -1,15 +1,19 @@
 import cv2
+import numpy as np
 from grayscale import grayscale
 from normalize import normalize
 from orientation import orientation_estimation
 from enchanted import gabor_filter
 from binarization import binary_image
+from thinning import Zhang_Suen_thinning
+from thining_new import thinning
+from minutiae import minutiae_extraction_filter
 
 from grayscale import grayscale_lib
 from enchanted import gabor_filter_lib
 
 # Non-library function
-a = cv2.imread('1_1.bmp')
+a = cv2.imread('2_2.bmp')
 gray = grayscale(a)
 normal = normalize(gray, 50, 300)
 
@@ -20,27 +24,22 @@ print("Gabor filter in image...")
 gabor = gabor_filter(normal, direct, 4, 1/7, 3)
 print("Gabor filter done!!")
 print("Binary image...")
-binary = binary_image(gabor, 30)
+binary = binary_image(gabor, 0)
 print("Done - binary image!!")
-cv2.imshow('gabor', gabor)
-cv2.imshow('binary', binary)
+print("Thinning Image...")
+thinned = thinning(binary)
+print("Done - thinning!!!")
+print("Minutiae Extracting...")
+print(binary)
+list_minutiae = minutiae_extraction_filter(thinned)
+print(type(list_minutiae))
+print("Done - minutiae extract!!")
+w, h = gray.shape
+minutiae_img = np.zeros((w, h))
+for i in range(len(list_minutiae)):
+    minutiae_img[list_minutiae[i][0], list_minutiae[i][1]] = 255
+print(list_minutiae)
+print(len(list_minutiae))
+cv2.imshow('thinned image', thinned)
+cv2.imshow('minutiae image', minutiae_img)
 cv2.waitKey(0)
-
-# Using library function, cái này đang bị lỗi(hàm gabor_filter_lib), với
-# hàm orentiation estimation đang xài vòng lặp
-
-'''
-img = cv2.imread('1_1.bmp')
-gray = grayscale_lib(img)
-normal = normalize(gray, 50, 300)
-print("Orientation Estimation...")
-direct = orientation_estimation(normal)
-print("Done - Estimation!!")
-print("Gabor filter...")
-gabor = gabor_filter_lib(gray, direct, 4, 1/7, 3)
-print("Done - Gabor!!!")
-img[:,:,0] = img[:,:,1] = img[:,:,2] = gabor
-cv2.imshow('normal image', normal)
-cv2.imshow('gabor', img)
-cv2.waitKey(0)
-'''
