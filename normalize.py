@@ -26,8 +26,6 @@ def normalize(img, nMean, nVar):
     w, h = img.shape
     _mean = getMean(img)
     var = getVariance(img, _mean)
-    print("m = ", _mean)
-    print("v = ", var)
     for i in range(w):
         for j in range(h):
             diff = math.fabs(img[i, j] - _mean)*math.sqrt(nVar/var)
