@@ -1,13 +1,47 @@
 import cv2
 import numpy as np
 
+'''
+Check if pixel at (x, y) has bolder
 
+Parameters:
+----
+image: 2-D array
+       gray image
+x    : int
+       x cordinate of pixel
+y    : int
+       y cordinate of pixel
+
+Return:
+----
+True if pixel at (x, y) has border.
+False if pixel at (x, y) dont have border.
+'''
 def isBoder(image, x, y):
     if (image[x - 1, y] == 255 or image[x + 1, y] == 255 or image[x, y - 1] == 255 or image[x, y + 1] == 255) and image[x, y] == 0:
         return True
     return False
 
+	
+	
+'''
+Check if pixel at (x, y) can be delete
 
+Parameters:
+----
+image: 2-D array.
+       gray image
+x    : int
+       x cordinate of pixel
+y    : int
+       y cordinate of pixel
+
+Return:
+----
+True if can be delete.
+False if can't be delete.
+'''
 def isDeleable(image, x, y):
     p1 = image[x - 1, y - 1]
     p2 = image[x, y - 1]
@@ -44,7 +78,20 @@ def isDeleable(image, x, y):
 
     return False
 
+	
+	
+'''
+Delete pixel if pixel have border and pixel can be delete
 
+Parameters:
+----
+image: 2D-array
+       gray image
+
+Return:
+----
+no return
+'''
 def makeBone(image):
     height, width = image.shape
     isBone = False
@@ -57,6 +104,19 @@ def makeBone(image):
                     isBone = False
 
 
+					
+'''
+Clear more pixel
+
+Parameters:
+----
+image: 2D-array
+       gray image
+
+Return:
+----
+no return
+'''
 def cleanBone(image):
     height, width = image.shape
     for i in range(height - 1):
@@ -75,6 +135,21 @@ def cleanBone(image):
                     image[i - 1, j] = 255
                     image[i, j + 1] = 255
 
+
+					
+'''
+Thinning Image
+
+Parameters:
+----
+image: 2D-array
+       gray scale
+
+Return:
+----
+image: 2D-array
+       thinned image
+'''
 def thinning(image):
     makeBone(image)
     cleanBone(image)

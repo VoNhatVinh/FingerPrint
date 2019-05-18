@@ -1,8 +1,22 @@
-import cv2
 import numpy as np
 import math
 
 
+'''
+Create a mask for gabor filter.
+
+Parameter
+----
+direct: float
+        direction of current fingerprint point
+widSquare: int
+		   1/2 kernala Size.
+	  
+Return
+----
+direct: float
+		direction of fingerprint
+'''
 def create_mask(direct, widsquare, f, fi):
     '''Hàm tạo mặt nạ gabor,
     direct(scalar value) - Hướng để tính gabor mesh,
@@ -21,14 +35,29 @@ def create_mask(direct, widsquare, f, fi):
     return mask
 
 
-def gabor_filter(image, direct, widSquare, f, fi):
-    '''Hàm filter ảnh sử dụng gabor_filter.
-    Tham số là image - mảng ảnh(1D - grayscale),
-    mảng orientation - direct,
-    width square là size của gabor,
-    fi là độ lệch chuẩn Gauss, f là chu kỳ hàm cos.
-    Hàm trả về mảng ảnh là ảnh đã được filter'''
+	
+'''
+Image filtered by Gabor
 
+Parameter
+----
+image : 2D-array.
+        gray image
+direct: float
+        direction of current fingerprint point
+widSquare: int
+		   1/2 kernala Size. 
+f:  float
+	the cycle of cos
+fi: float
+	standard deviation Gauss
+	  
+Return
+----
+gabor: 2D-array
+	   the image filtered by Gabor
+'''
+def gabor_filter(image, direct, widSquare, f, fi):
     w, h = image.shape
     pointvalue = 0
     gabor = np.zeros((w, h))
@@ -44,18 +73,3 @@ def gabor_filter(image, direct, widSquare, f, fi):
                 pointvalue = 0
             gabor[x, y] = pointvalue
     return gabor
-
-
-def gabor_filter_lib(image, direct, widSquare, f, fi):
-
-    w, h = direct.shape
-    filter_img_all = np.zeros((w, h))
-    for i in range(w):
-        for j in range(h):
-            g_kernel = cv2.getGaborKernel(
-                (widSquare, widSquare), fi, direct[i, j], 10.0, 1/f, 0, ktype=cv2.CV_32F)
-            filtered_img = cv2.filter2D(image, cv2.CV_8UC3, g_kernel)
-            filter_img_all += filtered_img
-
-    return filter_img_all
-        

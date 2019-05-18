@@ -6,4 +6,5 @@ def train(X, y):
     return clf
 
 def predict(X, clf):
-    return clf.predict(X)
+    return clf.predict_proba(X)
+
